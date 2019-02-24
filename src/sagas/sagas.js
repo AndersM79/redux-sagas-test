@@ -11,6 +11,8 @@ import {
 } from 'redux-saga/effects';
 
 import LOGIN_ACTIONS from '../actions/login-actions';
+import UI_ACTIONS from '../actions/ui-actions';
+
 import BACKGROUND_ACTIONS from '../actions/background-actions';
 import Api from '../utils/Api';
 
@@ -35,6 +37,7 @@ export function* authorizeUser(user, password) {
         const token = yield call(Api.authorize, user, password);
         yield put({ type: LOGIN_ACTIONS.LOGIN_SUCCESS, token });
         yield call(Api.storeItem, token)
+        yield put({ type: UI_ACTIONS.HIDE_SPINNER })
     } catch (error) {
         yield put({ type: LOGIN_ACTIONS.LOGIN_ERROR, error })
     } finally {
@@ -47,10 +50,14 @@ export function* authorizeUser(user, password) {
 export function* LoginFlow() {
     while (true) {
         const { user, password } = yield take(LOGIN_ACTIONS.LOGIN_REQUEST);
+        yield put({ type: UI_ACTIONS.SHOW_SPINNER })
         const task = yield fork(authorizeUser, user, password);
         const action = yield take([LOGIN_ACTIONS.LOGOUT, LOGIN_ACTIONS.LOGIN_ERROR])
-        if (action.type === LOGIN_ACTIONS.LOGOUT) yield cancel(task);
+        if (action.type === LOGIN_ACTIONS.LOGOUT) {
+            yield cancel(task)
+        };
         yield call(Api.clearItem, 'token')
+        yield put({ type: UI_ACTIONS.HIDE_SPINNER })
     }
 }
 
