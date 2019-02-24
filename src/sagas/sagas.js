@@ -1,6 +1,17 @@
-import { take, select, all, fork, put, call, cancelled, cancel } from 'redux-saga/effects';
+import {
+    take,
+    select,
+    all,
+    fork,
+    put,
+    call,
+    cancelled,
+    cancel,
+    delay
+} from 'redux-saga/effects';
 
 import LOGIN_ACTIONS from '../actions/login-actions';
+import BACKGROUND_ACTIONS from '../actions/background-actions';
 import Api from '../utils/Api';
 
 //hello world saga
@@ -8,7 +19,7 @@ export function* helloWorld() {
     console.log('Hello World')
 }
 
-// loger Redux Saga
+// TODO: Loger Redux SAGA
 export function* logger() {
     while (true) {
         const action = yield take('*');
@@ -18,7 +29,7 @@ export function* logger() {
     }
 }
 
-//login saga
+//TODO: Implementacion de login Flow with SAGAS
 export function* authorizeUser(user, password) {
     try {
         const token = yield call(Api.authorize, user, password);
@@ -42,6 +53,7 @@ export function* LoginFlow() {
         yield call(Api.clearItem, 'token')
     }
 }
+
 
 export default function* rootSaga() {
     yield all([

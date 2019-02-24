@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 
 import { doLogin, doLogOut } from '../utils/user-domain';
+import { startBackground, stopBackground, } from '../utils/background-domain';
 
 class IndexComponen extends React.Component {
     constructor(props) {
@@ -40,6 +41,18 @@ class IndexComponen extends React.Component {
         this.props.doLogOut();
     }
 
+    handleStartBackground = (event) => {
+        event.preventDefault();
+        console.log('start background..');
+        this.props.doStartBackground();
+    }
+
+    handleStopBackground = (event) => {
+        event.preventDefault();
+        console.log('stop background..');
+        this.props.doStopBackground();
+    }
+
     render() {
         return (
             <div>
@@ -55,6 +68,16 @@ class IndexComponen extends React.Component {
                         onClick={this.handleLogOut}
                     >
                         Logout
+                    </button>
+                    <button
+                        onClick={this.handleStartBackground}
+                    >
+                        Start background
+                    </button>
+                    <button
+                        onClick={this.handleStopBackground}
+                    >
+                        block background
                     </button>
                 </form>
                 <ul>
@@ -78,6 +101,8 @@ class IndexComponen extends React.Component {
 const mapDispatchToProps = dispatch => ({
     doLogin: () => dispatch(doLogin),
     doLogOut: () => dispatch(doLogOut),
+    doStartBackground: () => dispatch(startBackground),
+    doStopBackground: () => dispatch(stopBackground),
 });
 
 const mapStateToProps = state => ({});
