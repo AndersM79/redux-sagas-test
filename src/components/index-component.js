@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import AppTheme from 'docs/src/modules/components/AppTheme';
 
-import { startBackground, stopBackground, } from '../utils/background-domain';
-import Header from './header/header-container';
-import Login from './login/login-component';
+import Header from '../containers/header';
+import Login from '../containers/sing-up';
 
 class IndexComponen extends React.Component {
     constructor(props) {
@@ -30,46 +30,17 @@ class IndexComponen extends React.Component {
             })
     }
 
-
-    handleStartBackground = (event) => {
-        event.preventDefault();
-        console.log('start background..');
-        this.props.doStartBackground();
-    }
-
-    handleStopBackground = (event) => {
-        event.preventDefault();
-        console.log('stop background..');
-        this.props.doStopBackground();
-    }
-
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <Header />
                 <Login />
-                <ul>
-                    {
-                        this.state.users.map(user =>
-                            <React.Fragment key={user.name}>
-                                <li>
-                                    {user.name}
-                                </li>
-                                <li>
-                                    {user.email}
-                                </li>
-                            </React.Fragment>
-                        )}
-                </ul>
-            </div>
+            </React.Fragment>
         )
     }
 }
 
-const mapDispatchToProps = dispatch => ({
-    doStartBackground: () => dispatch(startBackground),
-    doStopBackground: () => dispatch(stopBackground),
-});
+const mapDispatchToProps = dispatch => ({});
 
 const mapStateToProps = state => ({});
 

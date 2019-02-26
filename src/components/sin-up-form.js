@@ -46,6 +46,7 @@ const styles = theme => ({
 class TextFields extends React.Component {
     state = {
         name: '',
+        password: ''
     };
 
     handleChange = name => event => {
@@ -84,6 +85,8 @@ class TextFields extends React.Component {
                                     type="password"
                                     autoComplete="current-password"
                                     margin="normal"
+                                    value={this.state.password}
+                                    onChange={this.handleChange('password')}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -91,6 +94,7 @@ class TextFields extends React.Component {
                                     variant="contained"
                                     color="secondary"
                                     className={classes.button}
+                                    onClick={this.props.doLogOut}
                                 >
                                     CANCELAR
                             </Button>
@@ -98,6 +102,7 @@ class TextFields extends React.Component {
                                     variant="contained"
                                     color="primary"
                                     className={classes.button}
+                                    onClick={() => this.props.doLogin(this.state.name, this.state.password)}
                                 >
                                     SINGUP
                                 </Button>

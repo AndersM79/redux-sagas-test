@@ -10,10 +10,8 @@ import {
     delay
 } from 'redux-saga/effects';
 
-import LOGIN_ACTIONS from '../actions/login-actions';
+import LOGIN_ACTIONS from '../actions/user-actions';
 import UI_ACTIONS from '../actions/ui-actions';
-
-import BACKGROUND_ACTIONS from '../actions/background-actions';
 import Api from '../utils/Api';
 
 //hello world saga
