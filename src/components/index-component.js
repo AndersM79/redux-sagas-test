@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import AppTheme from 'docs/src/modules/components/AppTheme';
 
 import Header from '../containers/header';
-import Login from '../containers/sing-up';
+import Login from '../containers/sing-in';
 
 class IndexComponen extends React.Component {
     constructor(props) {

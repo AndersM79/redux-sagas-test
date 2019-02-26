@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import LoginForm from '../components/sin-up-form';
+import LoginForm from '../components/sing-in-form';
 import { actions } from "../actions/user-actions";
 
 const mapDispatchToProps = dispatch => ({
