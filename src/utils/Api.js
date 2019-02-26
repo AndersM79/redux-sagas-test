@@ -4,10 +4,24 @@ const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkw
 
 const authorize = (user, password) => {
     console.log('doing login!!..')
-    return new Promise(res => setTimeout(() => res(fakeToken), 3000))
+    return new Promise(res =>
+        fetch('https://randomuser.me/api/')
+            .then(response => response.json())
+            .then(users => {
+                let data = {}
+                users.results.forEach(user => {
+                    data = {
+                        name: user.name.first,
+                        email: user.email,
+                        token: fakeToken
+                    }
+                })
+                res(data);
+            })
+    )
 }
 
-const storeItem = ( token ) => {
+const storeItem = (token) => {
     console.log('guardando token..');
     localStorage.setItem('token', token);
 };

@@ -1,4 +1,4 @@
- import React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -34,6 +34,13 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        marginRight: 8,
+    },
+    userName: {
+        'text-align': 'center',
+        'justify-content': 'center',
+        'align-items': 'center',
+        'display': 'flex',
     },
     inputRoot: {
         color: 'inherit',
@@ -160,14 +167,26 @@ class PrimarySearchAppBar extends React.Component {
                         </Typography>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <IconButton
-                                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
+                            {
+                                this.props.userInfo.isLogged && <div className={`${classes.sectionDesktop} ${classes.userName}`}>
+                                    <Typography
+                                        className={classes.title}
+                                        variant="h6"
+                                        color="inherit"
+                                        noWrap
+                                    >
+                                        {`Welcome ${this.props.userInfo.name}`}
+                                    </Typography>
+                                    <IconButton
+                                        aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                                        aria-haspopup="true"
+                                        onClick={this.handleProfileMenuOpen}
+                                        color="inherit"
+                                    >
+                                        <AccountCircle />
+                                    </IconButton>
+                                </div>
+                            }
                         </div>
                         <div className={classes.sectionMobile}>
                             <IconButton

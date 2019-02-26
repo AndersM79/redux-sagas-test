@@ -6,6 +6,7 @@ const mapDispatchToProps = dispatch => ({});
 
 const mapStateToProps = state => ({
     labels: state.labels.header,
+    userInfo: state.user
 });
 
 export default connect(

@@ -16,7 +16,6 @@ const logOut = () => ({
     type: USER_ACTIONS.LOGOUT
 });
 
-
 const actions = {
     login,
     logOut,

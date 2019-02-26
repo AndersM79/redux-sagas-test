@@ -1,122 +1,147 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-    form: {
-        width: 500
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        margin: 0
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 200,
-    },
-    margin: {
-        margin: theme.spacing.unit,
-    },
-    root: {
-        flexGrow: 1,
-        margin: 0
+    main: {
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: 3,
+        marginRight: 3,
+        [theme.breakpoints.up(400 + 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
     },
     paper: {
-        padding: theme.spacing.unit * 2,
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: 32,
     },
-    button: {
-        margin: theme.spacing.unit,
+    avatar: {
+        margin: 1,
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: 1,
+    },
+    submit: {
+        marginTop: 3,
     },
 });
 
-class TextFields extends React.Component {
-    state = {
-        name: '',
-        password: ''
-    };
+class SignIn extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        }
+    }
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
+    handleInputChange = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
-    const
+        this.setState({
+            [name]: value
+        }, () => console.log(this.state));
+    }
+
     render() {
         const { classes } = this.props;
-
         return (
-            <div>
-                <div className={classes.root}>
-                    <Grid container>
-                        <form
-                            className={classes.form}
-                            noValidate
-                            autoComplete="off"
-                            className={classes.margin}
+            <main className={classes.main}>
+                <Paper
+                    className={classes.paper}
+                    elevation={1}
+                >
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                    >
+                        Sign in
+                    </Typography>
+                    <form
+                        className={classes.form}
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            this.props.doLogin(
+                                this.state.email,
+                                this.state.password);
+                        }}>
+                        <FormControl
+                            margin="normal"
+                            required
+                            fullWidth
                         >
-                            <Grid item xs={12}>
-                                <TextField
-                                    id="standard-name"
-                                    label="Name"
-                                    className={classes.textField}
-                                    value={this.state.name}
-                                    onChange={this.handleChange('name')}
-                                    margin="normal"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    id="standard-password-input"
-                                    label="Password"
-                                    className={classes.textField}
-                                    type="password"
-                                    autoComplete="current-password"
-                                    margin="normal"
-                                    value={this.state.password}
-                                    onChange={this.handleChange('password')}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    className={classes.button}
-                                    onClick={this.props.doLogOut}
-                                >
-                                    CANCELAR
-                            </Button>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    onClick={() => this.props.doLogin(this.state.name, this.state.password)}
-                                >
-                                    SINGUP
-                                </Button>
-                            </Grid>
-                        </form>
-                    </Grid>
-                </div>
-            </div>
+                            <InputLabel htmlFor="email">Email Address</InputLabel>
+                            <Input
+                                id="email"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                                onChange={this.handleInputChange}
+                            />
+                        </FormControl>
+                        <FormControl
+                            margin="normal"
+                            required
+                            fullWidth
+                        >
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input
+                                name="password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                onChange={this.handleInputChange}
+                            />
+                        </FormControl>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={this.props.doLogOut}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign in
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
         );
     }
 }
 
-TextFields.propTypes = {
+SignIn.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TextFields);
+export default withStyles(styles)(SignIn);

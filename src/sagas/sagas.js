@@ -10,9 +10,10 @@ import {
     delay
 } from 'redux-saga/effects';
 
+import Api from '../utils/Api';
 import LOGIN_ACTIONS from '../actions/user-actions';
 import UI_ACTIONS from '../actions/ui-actions';
-import Api from '../utils/Api';
+import USER_ACTIONS from '../actions/user-actions';
 
 //hello world saga
 export function* helloWorld() {
@@ -32,9 +33,9 @@ export function* logger() {
 //TODO: Implementacion de login Flow with SAGAS
 export function* authorizeUser(user, password) {
     try {
-        const token = yield call(Api.authorize, user, password);
-        yield put({ type: LOGIN_ACTIONS.LOGIN_SUCCESS, token });
-        yield call(Api.storeItem, token)
+        const userData = yield call(Api.authorize, user, password);
+        yield put({ type: LOGIN_ACTIONS.LOGIN_SUCCESS, userData });
+        yield call(Api.storeItem, userData.token)
         yield put({ type: UI_ACTIONS.HIDE_SPINNER })
     } catch (error) {
         yield put({ type: LOGIN_ACTIONS.LOGIN_ERROR, error })
