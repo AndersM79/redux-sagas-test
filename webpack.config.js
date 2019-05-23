@@ -8,7 +8,7 @@ process.env.NODE_ENV = 'development';
 const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-    entry: ['@babel/polyfill', './app.js'],
+    entry: ['@babel/polyfill', './index.js'],
     output: {
         path: path.resolve(__dirname, 'dist/'),
         publicPath: '/',
